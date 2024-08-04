@@ -1,0 +1,66 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 20px;
+  margin-top: -2rem;
+}
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 200px !important;
+  margin-top: -1.9rem !important;
+  margin-left: 1rem !important;
+  box-shadow: floralwhite;
+  background-color: aliceblue !important;
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  margin-top: -2rem; /* Adjust this value to move the main content higher or lower */
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    
+    margin-bottom: 24px;
+    margin-left: 2rem !important;
+    width: 24.5rem !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .app-container {
+    padding: 10px;
+    
+  }
+  
+
+  .poll-table {
+    font-size: 12px;
+  }
+
+  .poll-table th,
+  .poll-table td {
+    padding: 6px;
+  }
+
+  .poll-table .hide-on-mobile {
+    display: none;
+  }
+}
+

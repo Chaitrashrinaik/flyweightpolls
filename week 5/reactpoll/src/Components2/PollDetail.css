@@ -1,0 +1,15 @@
+.poll-detail-container {
+  padding: 2.1rem;
+  margin-top: -2.5rem;
+
+}
+
+.vote-button {
+margin-bottom: 1rem;
+}
+
+@media (max-width: 800px) and (min-width: 450px) {
+  .poll-detail-container{
+    margin-left: -1rem;
+  }
+}

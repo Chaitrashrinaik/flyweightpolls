@@ -1,0 +1,42 @@
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  height: 100%;
+  width: 250px; /* Ensure the sidebar has a fixed width */
+}
+
+.create-poll-btn {
+  margin-top: 1rem;
+  width: 100%; /* Make the button width 100% of the sidebar */
+}
+
+.filter-tags-btn {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.tag-list {
+  border: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.tag-item {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tag-item input[type="checkbox"] {
+  margin-right: 5px;
+}
+.table-header {
+  color: grey;
+}

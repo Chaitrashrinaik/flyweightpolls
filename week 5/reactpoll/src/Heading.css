@@ -1,0 +1,36 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.header-container {
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+  margin: 0;
+  margin-left: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 2px 7px 50px rgba(24, 2, 2, 0.1);
+  box-sizing: 2rem !important; /* Includes padding and border in width */
+}
+
+.header-title {
+  font-size: 3em;
+  text-align: left;
+  margin-left: 300 !important;
+  padding: -40px 20px 30px 30px;
+  margin-left: 0.5rem;
+}
+
+.header-link {
+  text-decoration: none;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+ .header-container{
+  margin-left: 1.4rem;
+  
+ } 
+ 
+}

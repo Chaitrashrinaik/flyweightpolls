@@ -1,0 +1,95 @@
+/* App container */
+.app-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 100%;
+  min-height: 100vh;
+  gap: 20px;
+  padding: 20px;
+
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-top: -2.rem !important;
+  margin-left: -1.3rem
+}
+
+/* Content wrapper */
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin-left:2rem !important;
+}
+
+/* Main content */
+.main-content {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 1rem !important;
+  margin-left:-1.5rem;
+}
+
+/* Poll table container */
+.poll-table-container {
+  width: 100%;
+  /* overflow-x: auto; */
+}
+
+/* Create Poll button */
+.create-poll-btn {
+  width:13.9em !important;
+  margin-bottom: 10px !important;
+  margin-top: 2.3rem !important;
+  margin-left: -0.2rem !important;
+}
+
+/* Filter options */
+.filter-options {
+  display: grid;
+  gap: 10px;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .app-container {
+    margin-left: -1.1rem;
+    margin-top: -0.4rem !important;
+  }
+  .content-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    order: -1;
+  }
+  .create-poll-btn {
+    width: 24.5rem !important; 
+    margin-left: -0.2rem !important;
+  }
+  .main-content {
+    left: 2rem !important;
+    margin-left: 2rem;
+    width: 95.2%;
+    margin-top:  -1rem !important; /* Full width for mobile */
+  }
+  .filter-options {
+    width: 100%; /* Full width for mobile */
+  }
+}
+
+/* Media query for smaller mobile devices */
+@media (max-width: 450px) {
+  .app-container {
+    padding: 10px;
+  }
+  .create-poll-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

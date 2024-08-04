@@ -1,0 +1,219 @@
+from django.db.models import F
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from .models import Question, Choice, Tags
+import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Standalone functions
+def get_poll_data(request):
+    # Your view logic here
+    return render(request, 'polls/get_poll_data.html')
+
+def insert_poll_data(request):
+    # Your view logic here
+    return render(request, 'polls/insert_poll_data.html')
+
+def get_request_example(request):
+    print(request.GET)
+    data = dict()
+    return render(request, {})
+
+# Other functions
+def filter_polls_by_tags(request):
+    return render(request, 'polls/filter_polls_by_tags.html')
+
+@csrf_exempt
+def polls_controller(request):
+    logger.info("Received request to polls_controller")
+    print(request.GET)
+    if request.method == "GET":
+        polls = Question.objects.prefetch_related('choice_set')
+        data = []
+        for poll in polls:
+            choices = {}
+            for choice in poll.choice_set.all():
+                choices[choice.choice_text] = choice.votes
+            poll_data = {
+                'Question': poll.question_text,
+                'QuestionID': poll.id,
+                'Tags': [tag.tag_name for tag in poll.tags.all()],
+                'OptionVote': choices
+            }
+            data.append(poll_data)
+        json_response = JsonResponse({
+            'msg': 'Fetched polls successfully',
+            'data': data,
+            'success': True
+        }, safe=False)
+        return json_response
+        
+    elif request.method == "POST":
+        try:
+            request_body = request.body.decode('utf-8')
+            request_data = json.loads(request_body)
+            logger.info("Received request body: %s", request_body)
+            print(f"Request body: {request_body}")
+
+            question_text = request_data.get("Question")
+            option_vote = request_data.get("OptionVote")
+            tag_names = request_data.get("Tags")
+
+            # Create a new Question object
+            question = Question.objects.create(
+                question_text=question_text,
+                pub_date=datetime.now()
+            )
+
+            # Get or create Tag objects and associate them with the Question
+            for tag_name in tag_names:
+                tag, _ = Tags.objects.get_or_create(tag_name=tag_name, question_id=question.id)
+                question.tags.add(tag)
+
+            # Create Choice objects for the Question
+            for choice_text, votes in option_vote.items():
+                Choice.objects.create(question=question, choice_text=choice_text, votes=votes)
+
+            response_data = {"msg": "Poll created successfully.", "success": True}
+            return JsonResponse(response_data)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+def goat_footballer(request):
+    data = {
+        {
+           "Question": "Who will win the Champions League season?",
+           "QuestionID": 5,
+           "Tags": [
+               "cricket",
+               "sports"
+           ],
+           "OptionVote": {
+               "Real Madrid": 3,
+               "Bayern": 0,
+               "PSG": 3
+           }
+       },
+       {
+        "Tags": ["cricket", "sports"]
+       }
+
+
+    } 
+    
+    return JsonResponse(data, {"error": "Invalid request method"}, status=405)
+
+def get_filter_polls(request):
+    try:
+        # Get the 'tags' parameter from the query string
+        tags_str = request.GET.get('tags', '')
+        tags = [tag.strip() for tag in tags_str.split(',') if tag.strip()]
+        print(f"Tags (list of strings): {tags}")
+
+        # Filter the polls based on the 'tags' parameter if provided
+        if tags:
+            filtered_polls = Question.objects.filter(tags_tag_name_in=tags).distinct().prefetch_related('choice_set', 'tags')
+        else:
+            filtered_polls = Question.objects.all().prefetch_related('choice_set', 'tags')
+        print(f"Filtered Polls: {filtered_polls}")
+
+        data = []
+        for poll in filtered_polls:
+            choices = {}
+            for choice in poll.choice_set.all():
+                choices[choice.choice_text] = choice.votes
+
+            poll_data = {
+                'Question': poll.question_text,
+                'QuestionID': poll.id,
+                'Tags': [tag.tag_name for tag in poll.tags.all()],
+                'OptionVote': choices
+            }
+            data.append(poll_data)
+
+            # Print poll details in the terminal
+            print(f"Question: {poll.question_text}")
+            print(f"Question ID: {poll.id}")
+            print(f"Tags: {[tag.tag_name for tag in poll.tags.all()]}")
+            print(f"OptionVote: {choices}")
+            print("-" * 20)
+
+        if not data:
+            print("No polls found for the given tags.")
+
+        response_data = {
+            'msg': 'Fetched polls successfully',
+            'data': data,
+            'success': True
+        }
+
+        return JsonResponse(response_data, safe=False)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({'error': str(e)}, status=400)
+
+@csrf_exempt
+def increment_poll_vote(request, question_id):
+    logger.info("Received request to increment_poll_vote")
+    try:
+        # Get the Question object
+        question = get_object_or_404(Question, pk=question_id)
+
+        # Get the request body
+        request_body = request.body.decode('utf-8')
+        request_data = json.loads(request_body)
+        logger.info("Received request body: %s", request_body)
+        
+        # Get the choice option to increment
+        increment_option = request_data.get("incrementOption")
+
+        # Get the Choice object for the specified option
+        choice = question.choice_set.get(choice_text=increment_option)
+
+        # Increment the vote count
+        choice.votes = F("votes") + 1
+        choice.save()
+
+        response_data = {"msg": "Poll updated successfully", "success": True}
+        return JsonResponse(response_data)
+
+    except Choice.DoesNotExist:
+        return JsonResponse({"error": "Invalid choice option"}, status=400)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+def get_poll_data(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    choices = question.choice_set.all()
+    option_vote = {choice.choice_text: choice.votes for choice in choices}
+    data = {
+        "msg": "Fetched poll Successfully",
+        "data": {
+            "Question": question.question_text,
+            "QuestionID": question.id,
+            "Tags": [tag.tag_name for tag in question.tags.all()],
+            "OptionVote": option_vote
+        },
+        "success": True
+    }
+
+    return JsonResponse(data)
+
+def list_tags(request):
+    tag_names = Tags.objects.values_list('tag_name', flat=True).distinct()
+
+    response_data = {
+        "msg": "Fetched tags successfully",
+        "data": list(tag_names),
+        "success": True
+    }
+
+    return JsonResponse(response_data)

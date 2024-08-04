@@ -1,0 +1,176 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  height: 100vh;
+  overflow-x: hidden;
+
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-x: hidden;
+  background-color:white;
+ 
+}
+
+.header {
+  background-color: #e0e0e0;
+  padding: 20px;
+  text-align: left; /* Left align the header text */
+  box-sizing: border-box;
+  height: 100px;
+  width: 75%; /* Full width for header */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  padding-top: 1px;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  width: 180px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  margin-top: -13px;
+  margin-left: 10px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5; /* Match background color */
+}
+
+.create-poll-container {
+  background-color: rgb(253, 254, 255);
+  padding: 5px; /* Reduced padding */
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center; /* Center align button */
+  z-index: 1; /* Ensure it's on top */
+}
+
+.create-poll-btn {
+  color: white;
+  background-color: rgb(27, 156, 231);
+  padding: 10px 15px; /* Reduced padding */
+  font-size: 0.9em; /* Smaller font size */
+  cursor: pointer;
+  width: 100%; /* Full width button */
+  border: none !important; /* Remove border */
+  z-index: 1; /* Ensure it's on top */
+  margin-right: 95px;
+  margin-top: 30px;
+  /* Center align button horizontally */
+}
+
+.filter-options {
+  background-color: #dae9ec;
+  padding: 10px;
+  padding-left: 20px; /* Added left padding */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px; /* Add margin bottom for spacing */
+}
+
+.filter-tag {
+  margin-bottom: 5px;
+}
+
+.filter-by-tags-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+  color: #0000ff;
+}
+
+.poll-table {
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 800px; /* Set max-width */
+}
+
+@media (max-width: 600px) {
+  body {
+    overflow: visible;
+  }
+
+  .app-container {
+    height: auto;
+    overflow-y: visible;
+    padding: 0; /* Adjust padding for mobile */
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 10px;
+    width: 100%;
+    padding-left: 19px !important;
+    margin-bottom: 1px; /* Consistent spacing */
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    
+    
+  }
+
+  .sidebar,
+  .poll-table {
+    width: 100%;
+    max-width: none;
+    margin-right: 30px; /* Remove right margin for mobile */
+  }
+
+  .sidebar {
+    padding: 10px;
+    margin-bottom: 0px;
+    margin-right:10px !important; /* Consistent spacing */
+  }
+
+  .filter-options {
+    width: calc(100% - 10px);
+    margin: 10px 0;
+    max-width: 500px; /* Adjust margin for mobile */
+  }
+
+  .poll-table {
+    margin-top: 10px;
+    padding: 10px;
+    width: calc(100% - 20px) !important;
+    margin-bottom: 10px; /* Adjust margin for mobile */
+  }
+
+
+
+
+  .create-poll-btn {
+    width: 110%; /* Full width button for mobile */
+    padding: 13px 0;
+    margin-right: 300px ;
+    margin-left: 10 px ;
+    margin-top: 40px;
+    font-size: 1em;
+    bottom: 0;
+    left: 0;
+  }
+}

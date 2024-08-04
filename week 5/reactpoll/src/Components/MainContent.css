@@ -1,0 +1,21 @@
+.main-content {
+  display: flex;
+  grid-template-columns: 250px 1fr;
+  gap: 20px;
+  padding: 20px;
+  margin-top: 9%;
+  margin-right: 30px;
+  position: relative;
+}
+
+.poll-table-container {
+  grid-column: 2;
+  /* overflow-x: auto; */
+}
+
+
+@media (max-width: 450px) {
+  .main-content{
+    margin-top: 1rem !important;
+  }
+}
